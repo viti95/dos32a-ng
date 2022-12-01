@@ -601,8 +601,8 @@ r_init:	call	enable_A20		; enable A20
 	or	di,bx
 	jz	@@noE801		; if not, skip E801
 
-	movzx	eax,ax			; EBX holds extended/configured memory above 16M in 64K blocks
-	movzx	ebx,bx			; EAX holds extended/configured memory in range 1..16M in 1K blocks
+	and	eax,0FFFFh			; EBX holds extended/configured memory above 16M in 64K blocks
+	and	ebx,0FFFFh			; EAX holds extended/configured memory in range 1..16M in 1K blocks
 	shl	ebx,6
 	add	eax,ebx			; compute total memory as 1K blocks
 	jmp	@@calcmem
@@ -1045,7 +1045,7 @@ allocate_callbacks:
 ;-----------------------------------------------------------------------------
 vxr_initsetdsc:				; set descriptor for VCPI/XMS/raw init
 	push	ax
-	movzx	eax,ax			; EAX = base of segment
+	and	eax,0FFFFh			; EAX = base of segment
 	shl	eax,4
 	mov	wptr es:[bx],cx		; limit = CX
 	mov	dptr es:[bx+2],eax	; base address = EAX

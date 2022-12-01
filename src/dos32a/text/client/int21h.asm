@@ -611,11 +611,11 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 @__48h:	mov	ax,0100h
 	int	31h
 	jc	@@1
-	movzx	edx,dx
+	and edx, 0FFFFh
 	mov	[esp+1Ch],edx
 	jmp	@__ok
-@@1:	movzx	eax,ax
-	movzx	ebx,bx
+@@1:	and eax, 0FFFFh
+	and	ebx, 0FFFFh
 	mov	[esp+1Ch],eax
 	mov	[esp+10h],ebx
 	jmp	@__err
@@ -631,7 +631,7 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	dx,es
 	int	31h
 	jnc	@@0
-	movzx	eax,ax
+	and	eax,0FFFFh
 	mov	[esp+1Ch],eax
 	jmp	@__err
 @@0:	mov	wptr [esp+20h],0
@@ -648,8 +648,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	dx,es
 	int	31h
 	jnc	@__ok
-	movzx	eax,ax
-	movzx	ebx,bx
+	and	eax,0FFFFh
+	and	ebx,0FFFFh
 	mov	[esp+1Ch],eax
 	mov	[esp+10h],ebx
 	jmp	@__err

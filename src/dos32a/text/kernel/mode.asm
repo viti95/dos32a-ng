@@ -94,11 +94,11 @@ v_pmtormsw:
 	cli
 	push	ax			; store AX (real mode DS)
 	mov	ds,cs:selzero		; DS -> 0 (beginning of memory)
-	movzx	ebx,bx			; clear high word of EBX, real mode SP
+	and	ebx,0FFFFh			; clear high word of EBX, real mode SP
 	mov	eax,cs:vcpiswitchstack	; EAX -> top of temporary switch stack
-	movzx	edx,dx			; clear high word of EDX, real mode SS
+	and	edx,0FFFFh			; clear high word of EDX, real mode SS
 	mov	dptr ds:[eax+32],0	; store real mode GS
-	movzx	ecx,cx			; clear high word of ECX, real mode ES
+	and	ecx,0FFFFh			; clear high word of ECX, real mode ES
 	mov	dptr ds:[eax+28],0	; store real mode FS
 	mov	ds:[eax+20],ecx		; store real mode ES
 	pop	cx			; move real mode DS from protected

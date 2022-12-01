@@ -175,7 +175,7 @@ extern	char keycode;
 		char	dos32a_buildtime[0x09];
 	};
 
-	char*	version =	"9.1.2";
+	char*	version =	"9.1.3";
 	int	version2 =	0x090C;
 	int	changed	=	0;
 	int	hexmode =	0;

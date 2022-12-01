@@ -269,7 +269,7 @@ irq_down:
 
 	inc	_pc_irqpmtorm		; increment IRQ PM->RM counter
 
-	movzx	eax,al			; EAX = interrupt number
+	and	eax,0FFh			; EAX = interrupt number
 
 	mov	dx,rmstacktop		; DX = SS for real mode redirection
 	mov	bx,rmstacklen		; get size of real mode stack
@@ -323,7 +323,7 @@ irq_fail:
 @@1:	sub	esp,16h
 	mov	[esp+08h],eax		; save hiword(EAX)
 
-	movzx	eax,ax
+	and	eax,0FFFFh
 	mov	eax,cs:exctab_pm[eax*8+0]
 	mov	[esp+00h],eax		; target EIP
 
@@ -353,7 +353,7 @@ irq_fail:
 @@2:	sub	esp,1Ah
 	mov	[esp+08h],eax		; save hiword(EAX)
 
-	movzx	eax,ax
+	and	eax,0FFFFh
 	mov	eax,cs:exctab_pm[eax*8+0]
 	mov	[esp+00h],eax		; target EIP
 
@@ -380,7 +380,7 @@ irq_fail:
 	mov	[esp+20h],eax		; ESP
 
 	mov	ax,ss
-	movzx	eax,ax
+	and	eax,0FFFFh
 	mov	[esp+24h],eax		; SS
 
 	mov	ax,offs @@ret		; ret EIP
@@ -439,7 +439,7 @@ irq_standard:				; Standard IRQ handler that will send
 
 	inc	_pc_irqpmtorm		; increment IRQ PM->RM counter
 
-	movzx	eax,al			; EAX = IRQ number
+	and	eax,0FFh			; EAX = IRQ number
 
 	mov	dx,rmstacktop		; DX = SS for real mode redirection
 	mov	bx,rmstacklen		; get size of real mode stack

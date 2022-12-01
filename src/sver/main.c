@@ -43,7 +43,7 @@
 #include <typedefs.h>
 
 
-	char*	version		= "9.1.2";
+	char*	version		= "9.1.3";
 	char*	errstr		= "SVER fatal:";
 
 	int		fileisbound	= TRUE;

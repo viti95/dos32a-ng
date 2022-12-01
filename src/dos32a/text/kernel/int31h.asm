@@ -338,7 +338,7 @@ int31testaccess:				; test access bits in CX
 
 ;-----------------------------------------------------------------------------
 int31testint:
-	movzx	ebx,bl				; EBX = interrupt number
+	and	ebx,0FFh				; EBX = interrupt number
 	mov	al,bl
 	mov	ah,bl
 	and	ax,0F807h
@@ -746,7 +746,7 @@ int31010x_f2:
 ; Get Real Mode Interrupt Vector
 ;
 int31h_0200:
-	movzx	ebx,bl				; EBX = BL (interrupt number)
+	and	ebx,0FFh				; EBX = BL (interrupt number)
 	mov	dx,[ebx*4+0]			; load real mode vector offset
 	mov	cx,[ebx*4+2]			; load real mode vector segment
 	jmp	int31okdx			; return ok, with AX, CX, DX
@@ -760,7 +760,7 @@ int31h_0201:
 	xor	eax,eax				; temporarily disable null-ptr protection
 	mov	dr7,eax
 
-	movzx	ebx,bl				; EBX = BL (interrupt number)
+	and	ebx,0FFh				; EBX = BL (interrupt number)
 	mov	[ebx*4+0],dx			; set real mode vector offset
 	mov	[ebx*4+2],cx			; set real mode vector segment
 
@@ -781,7 +781,7 @@ int31h_0202:
 	cmp	bl,10h				; if not in range 00..0Fh
 	jae	@@done				; return 0:0
 
-	movzx	ebx,bl
+	and	ebx,0FFh
 	mov	cx,wptr exctab_pm[ebx*8+4]	; get user-defined exception handler CS
 	mov	edx,dptr exctab_pm[ebx*8+0]	; get user-defined exception handler EIP
 
@@ -804,7 +804,7 @@ int31h_0203:
 	cmp	bl,10h				; if not in range 00..0Fh
 	jae	@@done				; then done
 
-	movzx	ebx,bl
+	and	ebx,0FFh
 	mov	wptr exctab_pm[ebx*8+4],cx	; set user-defined exception handler CS
 	mov	dptr exctab_pm[ebx*8+0],edx	; set user-defined exception handler EIP
 
@@ -853,7 +853,7 @@ int31h_0205:
 
 	mov	ds,cs:seldata
 	mov	es,selzero
-	movzx	ecx,cx				; ECX = CX (selector)
+	and	ecx,0FFFFh				; ECX = CX (selector)
 
 	call	int31testint			; check if one of IRQs
 	jz	@@1				; if yes, install in buffer
@@ -985,7 +985,7 @@ int31h_0302:
 ; Simulate Real Mode Interrupt
 ;
 int31h_0300:
-	movzx	ebx,bl				; get real mode INT CS:IP
+	and	ebx,0FFh				; get real mode INT CS:IP
 	mov	ebp,dptr ds:[ebx*4]		; read from real mode interrupt table
 
 int3103:					; common to 0300h, 0301h, and 0302h
@@ -1014,7 +1014,7 @@ int3103:					; common to 0300h, 0301h, and 0302h
 	xchg	eax,gs:rmstackesp
 	push	eax
 
-	movzx	ecx,cx
+	and	ecx,0FFFFh
 	mov	ax,cx				; EAX = length of stack parms
 	add	ax,ax				; convert words to bytes
 	sub	bx,2Eh				; adjust real mode SP for needed vars
@@ -1653,9 +1653,10 @@ int31_linkfreeblocks:
 	mov	edi,esi				; remember addr of first free block
 	jmp	@@3
 
-@@2:	add	ecx,10h				; increment number of free blocks
+@@2:	
 	mov	eax,[esi+04h]			; get block size
 	btr	eax,31				; check if block is free
+	add	ecx,10h				; increment number of free blocks
 	lea	ebx,[eax+ebx]			; amount of free memory encountered
 	jnc	@@3				; if yes, jump
 	sub	ebx,eax

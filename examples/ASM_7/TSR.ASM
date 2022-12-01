@@ -143,7 +143,7 @@ check_if_resident:
 	jz	@not_installed		; if yes, our TSR isn't installed
 	movzx	eax,cx			; calculate linear addr of INT 80h
 	shl	eax,4			;  vector (CS<<4 + IP)
-	movzx	edx,dx
+	and	edx,0FFFFh
 	add	eax,edx
 	cmp	byte ptr ds:[eax],0CFh	; check if vector points to IRET
 	jz	@not_installed		; if yes, our TSR isn't installed

@@ -330,7 +330,7 @@ srclst_cnt:
 	mov	eax,gs:[esi]
 	test	cx,1000h		; check for Alias flag
 	jnz	@@2			; if not, jump
-	movzx	eax,ax
+	and eax, 0FFFFh
 	sub	esi,2
 @@2:	add	esi,4
 

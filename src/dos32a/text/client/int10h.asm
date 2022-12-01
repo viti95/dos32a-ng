@@ -119,8 +119,8 @@ _int10:	cld
 	pushfd
 	db	66h
 	call	cs:_int10_ip
-	movzx	eax,ax
-	movzx	ebx,bx
+	and	eax,0FFFFh
+	and	ebx,0FFFFh
 	mov	[esp+1Ch],eax
 	mov	[esp+10h],ebx
 	jmp	@__ok

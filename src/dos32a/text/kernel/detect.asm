@@ -102,7 +102,7 @@ pm32_info:
 	jz	@@xms1
 	mov	ah,08h
 	call	dptr xms_call		; get XMS v2 free mem in KB
-	movzx	eax,ax
+	and	eax,0FFFFh
 @@xms1:	mov	xms_data,eax
 	pop	es
 

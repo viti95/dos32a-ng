@@ -39,7 +39,7 @@
 
 #include "main.h"
 
-	char*	version = "9.1.2";
+	char*	version = "9.1.3";
 	char*	errstr="SC/32A fatal:";
 
 	char*	bindname="SB.EXE";
@@ -495,7 +495,7 @@ void CreateLCObjects()
 
 		if(!quiet)
 		{
-			printf("[û]  ");
+			printf("[ï¿½]  ");
 			if(!verbose) printf("(%1.1f%%)\n", ((float)(obj_new_size+0.01)/(float)(obj_old_size+0.01))*100);
 			else
 			{	  		 printf("Old=%7d,   New=%7d,   (%1.1f%%)  (%s)%c\n", obj_old_size,obj_new_size, ((float)(obj_new_size+0.01)/(float)(obj_old_size+0.01))*100, encodetype[app_enc_status], c);
@@ -523,7 +523,7 @@ void CreateLCFixups()
 
 	if(quiet!=TRUE)
 	{
-		printf("[û]  ");
+		printf("[ï¿½]  ");
 		if(!verbose) printf("(%1.1f%%)\n", ((float)(obj_new_size+0.01)/(float)(obj_old_size+0.01))*100);
 		else	     printf("Old=%7d,   New=%7d,   (%1.1f%%)  (%s)\n", obj_old_size,obj_new_size, ((float)(obj_new_size+0.01)/(float)(obj_old_size+0.01))*100, encodetype[app_enc_status]);
 	}
