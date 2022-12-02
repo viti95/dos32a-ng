@@ -197,7 +197,7 @@ _mus_int_pm:
 	lar	eax,eax
 	shr	eax,23
 	jc	@@1
-	movzx	esp,sp
+	and esp, 0FFFFh
 
 @@1:	mov	ax,cs:_seg_ds
 	mov	wptr es:[edi+2Ch],ax
