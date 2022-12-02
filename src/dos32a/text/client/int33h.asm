@@ -169,7 +169,8 @@ _mus_int_def:
 	mov	wptr [ebp+22h],ax
 	cli
 	call	int33h
-	movzx	eax,wptr [ebp+1Ch]
+	xor eax,eax
+	mov ax,wptr [ebp+1Ch]
 	add	esp,32h
 	sti
 	ret

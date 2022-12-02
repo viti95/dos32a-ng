@@ -141,7 +141,8 @@ check_if_resident:
 	mov	ax,cx			; check if vector == 0
 	or	ax,dx
 	jz	@not_installed		; if yes, our TSR isn't installed
-	movzx	eax,cx			; calculate linear addr of INT 80h
+	xor eax,eax
+	mov	ax,cx			; calculate linear addr of INT 80h
 	shl	eax,4			;  vector (CS<<4 + IP)
 	and	edx,0FFFFh
 	add	eax,edx

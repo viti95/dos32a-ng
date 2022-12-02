@@ -207,17 +207,20 @@ start:	push	cs			; DS = CS
 	mov	ah,4Ah
 	int	21h
 	jc	@@err2
-	movzx	eax,_seg_buf
+	xor eax,eax
+	mov ax,_seg_buf
 	mov	edx,eax
 	sub	ax,_seg_ds		; adjust for CS(sel):0000(offs)
 	shl	edx,4
 	shl	eax,4
 	mov	_lobufbase,eax		; set INT 21h buf base relative to CS:
 	mov	_lobufzero,edx		; set INT 21h buf base relative to 0
-	movzx	eax,_seg_ds
+	xor eax,eax
+	mov ax,_seg_ds
 	shl	eax,4
 	mov	_seg_ds_base,eax	; set 32bit base of CS and DS segment
-	movzx	eax,_lowmembuf
+	xor eax,eax
+	mov ax,_lowmembuf
 	shl	eax,4
 	mov	_lobufsize,eax		; set INT 21h buffer size in bytes
 	mov	es,_membase

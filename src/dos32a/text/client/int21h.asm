@@ -453,7 +453,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 @@1:	mov	[ebp+18h],ax			; store CX in structure
 
 	call	int21h				; DOS read
-	movzx	eax,wptr [ebp+1Ch]		; EAX=bytes read
+	xor eax,eax
+	mov ax,wptr [ebp+1Ch]		; EAX=bytes read
 	test	bptr [ebp+20h],1		; check for error
 	jnz	@@err
 
@@ -512,7 +513,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	call	@__cp2				; copy source into buffer
 
 	call	int21h				; DOS write to file
-	movzx	eax,wptr [ebp+1Ch]		; EAX=bytes written
+	xor eax,eax
+	mov ax,wptr [ebp+1Ch]		; EAX=bytes written
 	test	bptr [ebp+20h],1		; check for error
 	jnz	@@err
 
@@ -759,7 +761,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	ax,0101h
 	int	31h
 
-	movzx	eax,wptr [ebp+1Ch]		; get return code
+	xor eax,eax
+	mov	ax,wptr [ebp+1Ch]		; get return code
 	test	bptr [ebp+20h],01h		; check carry flag
 	lea	esp,[esp+32h]
 	mov	[esp+1Ch],eax			; put return code in AX
@@ -1037,8 +1040,10 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	test	al,al
 	jnz	@@0
 	call	int21h
-	movzx	eax,wptr [ebp+1Ch]
-	movzx	ecx,wptr [ebp+18h]
+	xor eax,eax
+	mov	ax,wptr [ebp+1Ch]
+	xor ecx,ecx
+	mov	cx,wptr [ebp+18h]
 	test	bptr [ebp+20h],1
 	lea	esp,[esp+32h]
 	mov	[esp+1Ch],eax
@@ -1454,8 +1459,10 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	[ebp+18h],cx
 	mov	[ebp+1Ch],ax
 	call	@__cpy
-	movzx	eax,wptr [ebp+1Ch]
-	movzx	ecx,wptr [ebp+18h]
+	xor eax,eax
+	mov	ax,wptr [ebp+1Ch]
+	xor ecx,ecx
+	mov cx,wptr [ebp+18h]
 	test	bptr [ebp+20h],1
 	lea	esp,[esp+32h]			; restore stack
 	ret
@@ -1466,12 +1473,18 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	[ebp+18h],cx
 	mov	[ebp+1Ch],ax
 	call	int21h
-	movzx	eax,wptr [ebp+1Ch]
-	movzx	ecx,wptr [ebp+18h]
-	movzx	edx,wptr [ebp+14h]
-	movzx	ebx,wptr [ebp+10h]
-	movzx	edi,wptr [ebp+22h]		; ES
-	movzx	esi,wptr [ebp+24h]		; DS
+	xor eax,eax
+	mov ax,wptr [ebp+1Ch]
+	xor ecx,ecx
+	mov cx,wptr [ebp+18h]
+	xor edx, edx
+	mov dx,wptr [ebp+14h]
+	xor ebx,ebx
+	mov bx,wptr [ebp+10h]
+	xor edi,edi
+	mov di,wptr [ebp+22h]		; ES
+	xor esi,esi
+	mov si,wptr [ebp+24h]		; DS
 	test	bptr [ebp+20h],1
 	lea	esp,[esp+32h]			; restore stack
 	ret
