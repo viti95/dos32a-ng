@@ -1495,7 +1495,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	test	bptr [ebp+20h],1
 	lea	esp,[esp+32h]			; restore stack
 	ret
-@__tst:	movzx	eax,wptr [ebp+1Ch]		; get error number
+@__tst:	xor eax, eax
+	mov ax,wptr [ebp+1Ch]		; get error number
 	test	bptr [ebp+20h],1		; check if CF is set
 	lea	esp,[esp+32h]			; restore stack
 	mov	[esp+1Ch],eax			; put EAX (error) on stack

@@ -529,7 +529,8 @@ irq_callback:
 	mov	edi,offs @@0		; prot. mode EIP
 	jmp	rmtopmswrout		; switch to protected mode
 
-@@0:	movzx	bx,temp_int
+@@0:	xor bx,bx	
+	mov bl,temp_int
 	shl	bx,3			; BX = pointer to interrupt ##h
 	pushfd				; set return eflags
 	push	large SELCODE		; set return CS on PM stack
