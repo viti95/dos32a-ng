@@ -598,7 +598,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	jnz	@@1
 	add	esp,32h
 	jmp	@__ok
-@@err:	movzx	eax,wptr [ebp+1Ch]
+@@err:	xor eax,eax
+	mov ax,wptr [ebp+1Ch]
 	add	esp,32h
 	mov	[esp+1Ch],eax
 	jmp	@__err
@@ -691,7 +692,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	ds,es:[ebx+0Ah]
 	mov	es,cs:_sel_ds
 	add	edi,180h
-	movzx	ecx,bptr ds:[esi]
+	xor ecx,ecx
+	mov cl,bptr ds:[esi]
 	inc	cx
 	inc	cx
 	rep	movs bptr es:[edi],[esi]	; copy command line
@@ -884,7 +886,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 ;  In:	-
 ;  Out:	EBX = PSP segment
 ;
-@__51h:	movzx	eax,cs:_seg_es
+@__51h:	xor eax,eax
+	mov	ax,cs:_seg_es
 	mov	[esp+10h],eax
 	jmp	@__ok
 
@@ -962,7 +965,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 ;  In:	-
 ;  Out:	BX = PSP selector
 ;
-@__62h:	movzx	eax,cs:_sel_es
+@__62h:	xor eax,eax
+	mov ax,cs:_sel_es
 	mov	[esp+10h],eax
 	jmp	@__ok
 
@@ -1006,7 +1010,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	jnz	@@2
 	add	esp,32h
 	jmp	@__ok
-@@err:	movzx	eax,wptr [ebp+1Ch]
+@@err:	xor eax,eax
+	mov ax,wptr [ebp+1Ch]
 	add	esp,32h
 	mov	[esp+1Ch],eax
 	jmp	@__err
@@ -1118,7 +1123,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 	mov	[ebp+1Ch],ax
 	call	int21h
 	mov	eax,'ID32'
-	movzx	ebx,cs:_version
+	xor ebx,ebx
+	mov bx,cs:_version
 	mov	ecx,[ebp+18h]
 	mov	edx,[ebp+14h]
 	mov	esi,[ebp+04h]
@@ -1138,7 +1144,8 @@ _ctrl_c:mov	ax,4CFFh	; exit on CTRL-C with code 255
 ;	FS = zero selector
 ;
 @_FF89:	mov	eax,'ID32'
-	movzx	esi,cs:_seg_id32
+	xor esi,esi
+	mov si,cs:_seg_id32
 	shl	esi,4
 	mov	fs,cs:_sel_zero
 	movzx	ebx,cs:_version

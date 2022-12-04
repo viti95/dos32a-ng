@@ -367,7 +367,8 @@ int31h_0000:
 	jz	int31fail8021
 
 	mov	edx,cs:gdtbase			; get base of GDT
-	movzx	eax,cs:gdtlimit			; EAX = last selector index
+	xor eax,eax
+	mov ax,cs:gdtlimit			; EAX = last selector index
 	and	al,0F8h
 
 	mov	bx,cx				; BX = number of selectors to find
@@ -690,7 +691,8 @@ int31h_0102:
 	mov	bx,si				; restore selector in BX
 
 int31010x:
-	movzx	edx,wptr [esp+10h]		; get original size
+	xor edx,edx
+	mov dx,wptr [esp+10h]		; get original size
 	shl	edx,4				; convert para to bytes
 	dec	edx				; limit=size-1
 	shld	ecx,edx,16
@@ -990,8 +992,10 @@ int31h_0300:
 
 int3103:					; common to 0300h, 0301h, and 0302h
 	mov	gs,cs:seldata
-	movzx	ebx,wptr es:[edi+2Eh]		; EBX = SP from register structure
-	movzx	edx,wptr es:[edi+30h]		; EDX = SS from register structure
+	xor ebx,ebx
+	mov bx,wptr es:[edi+2Eh]		; EBX = SP from register structure
+	xor edx,edx
+	mov dx,wptr es:[edi+30h]		; EDX = SS from register structure
 	mov	ax,bx				; check if caller provided stack
 	or	ax,dx
 	jnz	@@f3				; if yes, go on to setup stack
@@ -1279,8 +1283,10 @@ int31h_0A00:
 ;---------------------------------------------------------------------
 API_func00:					; API function 00h: get access to IDT & GDT
 	mov	bx,SELZERO
-	movzx	ecx,cs:gdtlimit			; ECX = GDT limit
-	movzx	edx,cs:idtlimit			; EDX = IDT limit
+	xor ecx,ecx
+	mov cx,cs:gdtlimit			; ECX = GDT limit
+	xor edx,edx
+	mov dx,cs:idtlimit			; EDX = IDT limit
 	mov	esi,cs:gdtbase			; BX:ESI = pointer to GDT
 	mov	edi,cs:idtbase			; BX:EDI = pointer to IDT
 	jmp	API_funcok

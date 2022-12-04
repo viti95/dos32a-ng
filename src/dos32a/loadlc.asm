@@ -142,9 +142,12 @@ load_lc_object:
 	jmp	@@done
 @@1:	call	load_gs_block
 @@done:	pop	ebp			; get Virtual_Size[Object]
-	movzx	ebx,word ptr fs:[000Eh]	; get # Page Table Entries
-	movzx	edx,word ptr fs:[0008h]	; get Flags[Object]
-	movzx	esi,word ptr fs:[000Ch]	; get Page Table Index
+	xor ebx,ebx
+	mov bx,word ptr fs:[000Eh]	; get # Page Table Entries
+	xor edx,edx
+	mov dx,word ptr fs:[0008h]	; get Flags[Object]
+	xor esi,esi
+	mov si,word ptr fs:[000Ch]	; get Page Table Index
 	pop	ecx
 	ret
 

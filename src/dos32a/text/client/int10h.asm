@@ -88,8 +88,10 @@ _int10:	cld
 	mov	ecx,16
 	mov	esi,_lobufbase
 	rep	movs dword ptr es:[edi],[esi]
-	movzx	eax,wptr [ebp+1Ch]	; get AX
-	movzx	ebx,wptr [ebp+10h]	; get BX
+	xor eax,eax
+	mov ax,wptr [ebp+1Ch]	; get AX
+	xor ebx,ebx
+	mov bx,wptr [ebp+10h]	; get BX
 	add	esp,32h
 	mov	[esp+1Ch],eax		; return EAX
 	mov	[esp+10h],ebx		; return EBX
@@ -204,8 +206,10 @@ _int10:	cld
 @@1:	rep	movs dptr es:[edi],[esi]
 	jmp	@v_ok
 
-@@mod:	movzx	edx,wptr [ebx+00h]	; get low word (offset)
-	movzx	eax,wptr [ebx+02h]	; get high word (segment)
+@@mod:	xor edx,edx
+	mov dx,wptr [ebx+00h]	; get low word (offset)
+	xor eax,eax
+	mov ax,wptr [ebx+02h]	; get high word (segment)
 	shl	eax,4			; convert real mode seg:off
 	add	eax,edx			; to linear ptr relative to zero
 	mov	dx,[ebx+02h]
@@ -338,10 +342,14 @@ _int10:	cld
 	mov	[ebp+1Ch],ax
 	mov	[ebp+10h],bx
 	call	int10h
-	movzx	eax,wptr [ebp+1Ch]	; get AX
-	movzx	ecx,wptr [ebp+18h]	; get CX
-	movzx	edx,wptr [ebp+22h]	; get ES segment
-	movzx	edi,wptr [ebp+00h]	; get DI pointer
+	xor eax,eax
+	mov ax,wptr [ebp+1Ch]	; get AX
+	xor ecx,ecx
+	mov cx,wptr [ebp+18h]	; get CX
+	xor edx,edx
+	mov dx,wptr [ebp+22h]	; get ES segment
+	xor edi,edi
+	mov di,wptr [ebp+00h]	; get DI pointer
 	cmp	ax,004Fh		; check that there was no error
 	jnz	@v_ok
 	shl	edx,4
@@ -366,7 +374,8 @@ _int10:	cld
 	mov	wptr [ebp+22h],ax	; store ES
 	mov	wptr [ebp+10h],0	; store BX
 	ret
-@v_ok:	movzx	eax,wptr [ebp+1Ch]
+@v_ok:	xor eax,eax
+	mov	ax,wptr [ebp+1Ch]
 	add	esp,32h
 	mov	[esp+1Ch],eax
 	jmp	@__ok

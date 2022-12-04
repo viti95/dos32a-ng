@@ -759,9 +759,11 @@ load_extrn_exec_header:
 
 search_for_mz:
 	xor	esi,esi
-@@0:	movzx	eax,wptr fs:[0004h]	; get pages in file
+@@0:	xor eax,eax	
+	mov ax,wptr fs:[0004h]	; get pages in file
 	shl	eax,9			; *512
-	movzx	ebx,wptr fs:[0002h]	; get bytes on last page
+	xor ebx,ebx
+	mov bx,wptr fs:[0002h]	; get bytes on last page
 	add	eax,ebx
 	mov	bx,fs:[0000h]
 	cmp	bx,'ZM'

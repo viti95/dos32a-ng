@@ -297,14 +297,16 @@ apply_fixups:
 	test	cl,20h
 	jnz      srclist
 	movsx	edx,word ptr gs:[esi+2]	; get SRCOFF
-	movzx	eax,word ptr gs:[esi+4]	; get OBJNUM
+	xor eax, eax
+	mov	ax,word ptr gs:[esi+4]	; get OBJNUM
 	add	esi,6
 	add	edi,edx			; calculate dest addr to be fixed
 	jmp	srclst_cnt
 srclist:
 	shl	ecx, 8
 	mov	cl,byte ptr gs:[esi+2]	; get number of list entries
-	movzx	eax,word ptr gs:[esi+3]	; get OBJNUM
+	xor eax, eax
+	mov ax,word ptr gs:[esi+3]	; get OBJNUM
 	add	esi,5
 	ror	ecx, 8
 srclst_cnt:

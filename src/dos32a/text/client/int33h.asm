@@ -204,12 +204,18 @@ _mus_int_pm:
 	mov	wptr es:[edi+2Ch],ax
 	mov	wptr es:[edi+2Ah],offs @@done
 
-	movzx	eax,wptr es:[edi+1Ch]
-	movzx	ecx,wptr es:[edi+18h]
-	movzx	edx,wptr es:[edi+14h]
-	movzx	ebx,wptr es:[edi+10h]
-	movzx	esi,wptr es:[edi+04h]
-	movzx	edi,wptr es:[edi+00h]
+	xor eax,eax
+	mov ax,wptr es:[edi+1Ch]
+	xor ecx,ecx
+	mov cx,wptr es:[edi+18h]
+	xor edx,edx
+	mov dx,wptr es:[edi+14h]
+	xor ebx,ebx
+	mov bx,wptr es:[edi+10h]
+	xor esi,esi
+	mov si,wptr es:[edi+04h]
+	xor edi,edi
+	mov di,wptr es:[edi+00h]
 	pushfd
 	call	fword ptr cs:_mus_off
 

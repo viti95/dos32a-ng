@@ -327,7 +327,8 @@ irq_fail:
 	mov	eax,cs:exctab_pm[eax*8+0]
 	mov	[esp+00h],eax		; target EIP
 
-	movzx	eax,wptr [esp+08h]
+	xor eax,eax
+	mov ax,wptr [esp+08h]
 	mov	eax,cs:exctab_pm[eax*8+4]
 	mov	[esp+04h],eax		; target CS
 
@@ -357,7 +358,8 @@ irq_fail:
 	mov	eax,cs:exctab_pm[eax*8+0]
 	mov	[esp+00h],eax		; target EIP
 
-	movzx	eax,wptr [esp+08h]
+	xor eax,eax
+	mov ax,wptr [esp+08h]
 	mov	eax,cs:exctab_pm[eax*8+4]
 	mov	[esp+04h],eax		; target CS
 
@@ -630,7 +632,8 @@ callback:				; real mode callback handler
 	pushfd				; push flags for IRETD from callback
 	push	large cs		; push 32bit CS for IRETD
 	push	large offs @@1		; push 32bit EIP for IRETD
-	movzx	eax,wptr [ebp+22]	; EAX = target CS of callback
+	xor eax,eax
+	mov ax,wptr [ebp+22]	; EAX = target CS of callback
 	push	eax			; push 32bit CS for RETF to callback
 	push	dptr [ebp+18]		; push 32bit EIP for retf
 	db 66h				; 32bit RETF to callback
@@ -641,8 +644,10 @@ callback:				; real mode callback handler
 	pop	ds
 	mov	esi,edi
 	mov	es,cs:selzero		; ES -> 0 (beginning of memory)
-	movzx	ebx,wptr [esi+2Eh]	; EBX = real mode SP from structure
-	movzx	edx,wptr [esi+30h]	; EDX = real mode SS from structure
+	xor ebx,ebx
+	mov	bx,wptr [esi+2Eh]	; EBX = real mode SP from structure
+	xor edx,edx
+	mov	dx,wptr [esi+30h]	; EDX = real mode SS from structure
 	sub	bx,42			; subtract size of vars to be put
 	mov	ebp,[esi+0Ch]		; EBP = pushed ESP from real mode
 	mov	bp,bx			; EBP = old high & new low word of ESP
