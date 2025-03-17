@@ -294,29 +294,18 @@ apply_fixups:
 @@0:	push	ecx edi
 	mov	_err_code,4005h		; "unrecognized fixup data"
 	mov	cx,gs:[esi+0]		; get SRC/FLAGS
-	test	cl,20h
-	jnz      srclist
 	movsx	edx,word ptr gs:[esi+2]	; get SRCOFF
 	xor eax, eax
 	mov	ax,word ptr gs:[esi+4]	; get OBJNUM
-	add	esi,6
 	add	edi,edx			; calculate dest addr to be fixed
-	jmp	srclst_cnt
-srclist:
-	shl	ecx, 8
-	mov	cl,byte ptr gs:[esi+2]	; get number of list entries
-	xor eax, eax
-	mov ax,word ptr gs:[esi+3]	; get OBJNUM
-	add	esi,5
-	ror	ecx, 8
-srclst_cnt:
-	test	cx,0F00h		; Imports not supported
+	test	cx,0F20h		; SrcLists/Imports not supported
 	jnz	file_errorm		; jump if one of these
 	test	cx,4000h		; test if 16bit object number
 	jnz	@@1			; if yes, jump
 	mov	ah,0
 	dec	esi
-@@1:	dec	eax			; Object Number - 1
+@@1:	add	esi,6
+	dec	eax			; Object Number - 1
 	shl	eax,4
 	mov	edx,_app_tmp_addr1
 	sub	edx,eax
@@ -335,28 +324,11 @@ srclst_cnt:
 	and eax, 0FFFFh
 	sub	esi,2
 @@2:	add	esi,4
-
-	test	cl,20h			; On source list:
-	jz      @@3
-@@7:	pop 	edi			; Restore edi for next entry
-	push 	edi
-	movsx	edx,word ptr gs:[esi]	; get SRCOFF
-	add	esi, 2
-	add	edi,edx			; calculate dest addr to be fixed
-
-@@3:	cmp	cl,07h			; 32bit offset fixup
+@@3:	cmp	cl,07h
 	jnz	@@4
 	add	eax,edx
 	mov	gs:[edi+0],eax
-@@5:	test	cl,20h			; On source list:
-	jz	@@6
-	ror	ecx, 16			; Check if number of entries has been eached
-	inc	cl
-	cmp	cl, ch
-	ja	@@6
-	rol	ecx, 16
-	jmp	@@7
-@@6:	pop	edi ecx
+@@5:	pop	edi ecx
 	cmp	esi,ecx
 	jb	apply_fixups
 	ret
