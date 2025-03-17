@@ -332,7 +332,7 @@ v_msg03	db 'LE',0,'LX',0,'LC',0,'PE',0
 v_msg04	db 'KB',0
 v_msg05	db 'MB',0
 v_msg10	db 'Loading program "%s", %s-style',cre
-v_msg11	db 'Object #%d loaded at %l, V/Psize: %l/%l, Flags=%w, Sel=%w',cre
+v_msg11	db 'Obj #%d loaded at %l, V/Psize: %l/%l, Flags=%w, Sel=%w',cre
 v_msg12	db 'Startup CS:EIP=%w:%l, SS:ESP=%w:%l, %s EIP=%d:%l',cr
 	db 'Memory left: DOS=%dKB, DPMI=%d%s. PSP_Sel=%w, Env_Sel=%w, Env_Seg=%w',cre
 
@@ -342,7 +342,7 @@ excmsgE	db 'exception',0
 excmsgI	db 'unexpected INT',0
 excmsg1	db '%s %bh',cr
 	db 'Identity: %s at %w:%l',cre
-excmsg2	db '%s crash address %d:%l',0
+excmsg2	db '%s crash addr %d:%l',0
 excmsg4	db ', error code pushed on stack %l',0
 
 excmsgA	db 'Linear',0
