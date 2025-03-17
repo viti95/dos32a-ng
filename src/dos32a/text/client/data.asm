@@ -224,15 +224,9 @@ _app_buf_allocbase	equ @area2_dd+APP_MAXOBJECTS*2	;dd APP_MAXOBJECTS*2 dup(00h)
 
 ;-----------------------------------------------------------------------------
 n_msg	db 0
-cpr_msg db '   ___     ___',cr
-        db '  (o o)   (o o)     DOS/32A -- DOS Extender '
-If EXEC_TYPE eq 2
-	db 'BETA '
-EndIf
-	db 'version '
+cpr_msg db 'DOS32A '
 ver_msg	db 'x.x.x',cr
-        db ' (  V  ) (  V  )    Copyright (C) 1996-2006 by Narech K.',cr
-        db '/--m-m- /--m-m--ng- https://github.com/yetmorecode/dos32a-ng',cr,cr
+        db '(C) 96-06 Narech K.',cr,cr
 cpr_end	label byte
 
 errmsg1	db 'DOS32A fatal (%w): ',0
@@ -296,23 +290,23 @@ a_err4	db 'exec format not supported ("%s")'			,0
 ;=============================================================================
 l_err1	db 'too many objects in app ("%s")'			,0
 l_err2	db 'not enough DOS memory (app "%s")'	,0
-l_err3	db 'not enough extended memory (app "%s")'	,0
-l_err4	db 'not enough extended memory (fixups "%s")'	,0
+l_err3	db 'not enough XMS (app "%s")'	,0
+l_err4	db 'not enough XMS (fixups "%s")'	,0
 l_err5	db 'error fixup data (app "%s")'		,0
-l_err6	db '16bit fixup overflow (application "%s")'		,0
+l_err6	db '16bit fixup overflow (app "%s")'		,0
 l_err7	db 'not enough DOS Transfer Buffer (LC-exec "%s")'	,0
 
 
 ; MISC. errors		80xx
 ;=============================================================================
-x_err1	db 'syntax is DOS32A <execname.xxx>'				,0
+x_err1	db 'syntax is DOS32A <file>'				,0
 x_err2	db 'DOS error (#%wh)'				,0
 x_err3	db 'DPMI host rror (#%wh)'				,0
 
 
 ; WARNINGS		90xx
 ;=============================================================================
-w_msg1	db 'no extended memory allocated'			,0
+w_msg1	db 'no XMS allocated'			,0
 w_msg2	db 'PICs relocated to INT %bh, INT %bh'		,0
 w_msg3	db 'real mode INT vector modified: INT %bh'	,0
 w_msg4	db 'mouse init failed'				,0
@@ -325,7 +319,7 @@ w_msg6	db 'incompatible DOS32A already running'		,0
 r_msg80	db 'unknown error (#%bh)'					,0
 r_msg81	db 'out of real-mode virtual stacks'				,0
 r_msg82	db 'out of protected-mode virtual stacks'			,0
-r_msg83	db 'extended memory blocks corrupted (#%l)'		,0
+r_msg83	db 'XMS blocks corrupted (#%l)'		,0
 r_msg84	db 'DOS4G API calls not supported'				,0
 
 
