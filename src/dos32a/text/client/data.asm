@@ -235,9 +235,9 @@ ver_msg	db 'x.x.x',cr
         db '/--m-m- /--m-m--ng- https://github.com/yetmorecode/dos32a-ng',cr,cr
 cpr_end	label byte
 
-errmsg1	db 'DOS/32A fatal (%w): ',0
-errmsg2	db 'DOS/32A warning (%w): ',0
-errmsg3	db 'DOS/32A run-time (%w): ',0
+errmsg1	db 'DOS32A fatal (%w): ',0
+errmsg2	db 'DOS32A warning (%w): ',0
+errmsg3	db 'DOS32A run-time (%w): ',0
 
 ;-----------------------------------------------------------------------------
 dos_str	db 'DOS32A='
@@ -261,78 +261,78 @@ dfC_str db 'NOC'		; disable copyright banner		--
 
 ; INIT errors		00xx
 ;=============================================================================
-d_err0	db 'this program requires DOS 4.0 or higher'			,0
-d_err1	db '80386 processor or better required to run protected mode'	,0
-d_err2	db 'system software does not follow VCPI/DPMI specifications'	,0
-d_err3	db 'present DPMI host does not support 32bit applications'	,0
+d_err0	db 'DOS 4.0+ required'			,0
+d_err1	db '80386+ CPU required'	,0
+d_err2	db 'wrong VCPI/DPMI specs'	,0
+d_err3	db 'DPMI host does not support 32bit apps'	,0
 d_err4	db 'incompatible VCPI PIC mappings'				,0
-d_err5	db 'could not enter 32bit protected mode'			,0
-d_err6	db 'could not allocate system selectors'			,0
+d_err5	db 'could not enter protected mode'			,0
+d_err6	db 'could not alloc system selectors'			,0
 d_err7	db 'could not enable A20 line'					,0
 
 
 ; MEMORY errors		10xx
 ;=============================================================================
-m_err1	db 'not enough DOS memory, additional %dKB needed'		,0
-m_err2	db 'DOS reported insufficient memory'				,0
+m_err1	db 'not enough DOS memory, (%dKB)'		,0
+m_err2	db 'not enough DOS memory'				,0
 
 
 ; EXEC errors		20xx
 ;=============================================================================
-e_err0	db 'invalid environment'					,0
-e_err1	db 'could not open exec file "%s"'				,0
-e_err2	db 'error in exec file "%s"'					,0
+e_err0	db 'invalid env'					,0
+e_err1	db 'could not open file "%s"'				,0
+e_err2	db 'error in file "%s"'					,0
 
 
 ; APPLICATION errors	30xx
 ;=============================================================================
-a_err1	db 'could not open application file "%s"'			,0
-a_err2	db 'error in application file "%s"'				,0
-a_err3	db 'file "%s" does not contain any valid exec format'		,0
-a_err4	db 'exec format not supported in file "%s"'			,0
+a_err1	db 'could not open app file "%s"'			,0
+a_err2	db 'error in app file "%s"'				,0
+a_err3	db 'file "%s" is not valid'		,0
+a_err4	db 'exec format not supported ("%s")'			,0
 
 
 ; LOADER errors		40xx
 ;=============================================================================
-l_err1	db 'too many objects in application exec "%s"'			,0
-l_err2	db 'not enough DOS memory to load application exec "%s"'	,0
-l_err3	db 'not enough extended memory to load application exec "%s"'	,0
-l_err4	db 'not enough extended memory to load fixups for exec "%s"'	,0
-l_err5	db 'unrecognized fixup data in application exec "%s"'		,0
-l_err6	db '16bit fixup overflow in application exec "%s"'		,0
-l_err7	db 'not enough DOS Transfer Buffer space to load LC-exec "%s"'	,0
+l_err1	db 'too many objects in app ("%s")'			,0
+l_err2	db 'not enough DOS memory (app "%s")'	,0
+l_err3	db 'not enough extended memory (app "%s")'	,0
+l_err4	db 'not enough extended memory (fixups "%s")'	,0
+l_err5	db 'error fixup data (app "%s")'		,0
+l_err6	db '16bit fixup overflow (application "%s")'		,0
+l_err7	db 'not enough DOS Transfer Buffer (LC-exec "%s")'	,0
 
 
 ; MISC. errors		80xx
 ;=============================================================================
 x_err1	db 'syntax is DOS32A <execname.xxx>'				,0
-x_err2	db 'DOS reported an error (#%wh)'				,0
-x_err3	db 'DPMI host reported an error (#%wh)'				,0
+x_err2	db 'DOS error (#%wh)'				,0
+x_err3	db 'DPMI host rror (#%wh)'				,0
 
 
 ; WARNINGS		90xx
 ;=============================================================================
-w_msg1	db 'no extended memory has been allocated'			,0
-w_msg2	db 'PICs have been relocated to INT %bh, INT %bh'		,0
-w_msg3	db 'real mode interrupt vector has been modified: INT %bh'	,0
-w_msg4	db 'mouse initialization failed'				,0
-w_msg5	db 'object #%d contains no data or code'			,0
-w_msg6	db 'incompatible version of DOS/32A already running'		,0
+w_msg1	db 'no extended memory allocated'			,0
+w_msg2	db 'PICs relocated to INT %bh, INT %bh'		,0
+w_msg3	db 'real mode INT vector modified: INT %bh'	,0
+w_msg4	db 'mouse init failed'				,0
+w_msg5	db 'object #%d has no data or code'			,0
+w_msg6	db 'incompatible DOS32A already running'		,0
 
 
 ; RUN-TIME errors	60xx
 ;=============================================================================
-r_msg80	db 'unknown error code (#%bh)'					,0
+r_msg80	db 'unknown error (#%bh)'					,0
 r_msg81	db 'out of real-mode virtual stacks'				,0
 r_msg82	db 'out of protected-mode virtual stacks'			,0
-r_msg83	db 'extended memory blocks have been corrupted (#%l)'		,0
-r_msg84	db 'DOS/4G API calls not supported'				,0
+r_msg83	db 'extended memory blocks corrupted (#%l)'		,0
+r_msg84	db 'DOS4G API calls not supported'				,0
 
 
 
 ; Verbose messages
 ;=============================================================================
-v_msg01	db 'Processor: %d, System: %s, Memory: DOS=%dKB, DPMI=%d%s',cre
+v_msg01	db 'CPU: %d, System: %s, Mem: DOS=%dKB, DPMI=%d%s',cre
 v_msg02	db 'NONE',0, 'XMS',0,0, 'VCPI',0, 'DPMI',0
 v_msg03	db 'LE',0,'LX',0,'LC',0,'PE',0
 v_msg04	db 'KB',0
@@ -345,7 +345,7 @@ v_msg12	db 'Startup CS:EIP=%w:%l, SS:ESP=%w:%l, %s EIP=%d:%l',cr
 
 ;=============================================================================
 excmsgE	db 'exception',0
-excmsgI	db 'unexpected interrupt',0
+excmsgI	db 'unexpected INT',0
 excmsg1	db '%s %bh',cr
 	db 'Identity: %s at %w:%l',cre
 excmsg2	db '%s crash address %d:%l',0
@@ -380,18 +380,18 @@ selmsgY	db 'CLIENT=',0
 selmsgZ	db 'APP/32=',0
 selmsgW	db 'APP/??=',0
 
-i_msg00	db 'integer division by zero'					,0
-i_msg01	db 'hardware breakpoint'					,0
+i_msg00	db 'division by zero'					,0
+i_msg01	db 'HW breakpoint'					,0
 i_msg02	db 'NMI'							,0
-i_msg03	db 'software breakpoint'					,0
+i_msg03	db 'SW breakpoint'					,0
 i_msg04	db 'overflow check fault'					,0
 i_msg05	db 'bounds check fault'						,0
 i_msg06	db 'invalid opcode fault'					,0
-i_msg07	db 'coprocessor not available'					,0
+i_msg07	db 'FPU not available'					,0
 i_msg08	db 'double fault'						,0
-i_msg09	db 'coprocessor segment overrun'				,0
+i_msg09	db 'FPU seg overrun'				,0
 i_msg0A	db 'invalid TSS fault'						,0
-i_msg0B	db 'segment not present fault'					,0
+i_msg0B	db 'seg not present fault'					,0
 i_msg0C	db 'stack fault'						,0
 i_msg0D	db 'general protection fault'					,0
 i_msg0E	db 'page fault'							,0
